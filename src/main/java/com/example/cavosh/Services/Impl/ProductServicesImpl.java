@@ -1,43 +1,46 @@
 package com.example.cavosh.Services.Impl;
 
 import com.example.cavosh.Models.Productos;
-import com.example.cavosh.Services.ProductServices;
+import com.example.cavosh.Repository.ProductosRepository;
+import com.example.cavosh.Services.ProductosServices;
 
 import java.util.List;
 
-public class ProductServicesImpl implements ProductServices {
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class ProductServicesImpl implements ProductosServices {
+
+    @Autowired
+    private ProductosRepository productosRepository;
 
     @Override
-    public String DeleteProductos(Long id) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Productos> GetProductos() {
+        return productosRepository.findAll();
     }
 
     @Override
-    public List<Productos> GetProducto() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public String PostProductos(Productos productos) {
-        // TODO Auto-generated method stub
-        return null;
+    public String PostProductos(Productos producto) {
+        productosRepository.save(producto);
+        return "Producto Guardado";
     }
 
     @Override
     public String PutProductos(Productos producto, Long id) {
-        // TODO Auto-generated method stub
-        return null;
+        Productos producto1 = productosRepository.findById(id).get();
+
+        if (producto1 != null) {
+            producto1.setNombre(producto.getNombre());
+            producto1.setPrecio(producto.getPrecio());
+            productosRepository.save(producto1);
+            return "Producto Actualizado";
+        } else {
+            return "Hubo un error";
+        }
     }
 
-    
+    @Override
+    public String DeleteProductos(Long id) {
+        productosRepository.deleteById(id);
+        return "Producto Eliminado";
+    }
 }
-
-
-
-
-
-
-
-

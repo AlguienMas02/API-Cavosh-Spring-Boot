@@ -3,8 +3,8 @@ import java.util.List;
 
 import com.example.cavosh.Models.Productos;
 
-public interface ProductServices {
-    List<Productos> GetProducto();
+public interface ProductosServices {
+    List<Productos> GetProductos();
 
     String DeleteProductos(Long id);
 
